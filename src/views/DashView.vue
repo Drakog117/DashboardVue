@@ -1,9 +1,12 @@
 <template>
-    <div class="topbar">
+  <div class="topbar">
       <TopbarComponent/>
     </div>
+
+  <form id="filtroFechasForm">
+    
     <div>
-      <SlidebarComponent/>
+      <SidebarComponent/>
     </div>
     
     <div class="flex-container">
@@ -59,13 +62,19 @@
     </div>
   
     <div class="flex-container">
-      <Rectangle/>
-      <Rectangle/>
+      <RectangleComponent id="velocimetro"/>
+      <RectangleComponent id="chartContainer"/>
     </div>
   
     <div class="flex-container">
-      <RectangleComponent/>
-      <RectangleComponent/>
+      
+
+      <RectangleComponent id="ingresosPuntoEquilibrio"/>
+      <RectangleComponent id="clientesPorMes"/>
+      <RectangleComponent id="ventasPorServicio"/>
+      
+
+      <RectangleComponent id="map"/>
     </div>
   
     <div class="flex-container">
@@ -93,7 +102,10 @@
       
       
     </div>
-  </template>
+
+  </form>
+    
+</template>
   
   <style>
   /* Estilos base */
@@ -159,11 +171,55 @@
   /* Estilos para los componentes Square y Rectangle, si es necesario */
   </style>
   
-  <script setup>
   
+
+
+  
+  <script>
+ 
   import TopbarComponent from '/src/components/TopbarComponent.vue'
-  import SlidebarComponent from '/src/components/SidebarComponent.vue'
+  import SidebarComponent from '/src/components/SidebarComponent.vue'
   import RectangleComponent from '/src/components/RectangleComponent.vue'
   import SquareComponent from '/src/components/SquareComponent.vue'
   
-  </script>
+  // Importación de componentes
+  
+
+
+
+  // Importación de funciones de dashboard.js
+  import { cargarGraficoIngresosPuntoEquilibrio, cargarClientesPorMes, inicializarGraficoVentasPorServicio, cambiarTipoGrafica} from '../Api/kpis.js';
+  import {fetchData, updateChart, updateChartWithData, changeCurrency, convertCurrency, getCurrencySymbol } from '../Api/dashboard.js';
+  import { actualizarTotales, cambiarTipoMoneda } from '../Api/cuadros.js';
+
+  export default {
+    components: {
+      TopbarComponent,
+      SidebarComponent,
+      RectangleComponent,
+      SquareComponent
+    },
+    
+    mounted() {
+      this.$nextTick(() => {
+        
+        fetchData();
+        updateChart();
+        updateChartWithData();
+        changeCurrency();
+        convertCurrency();
+        getCurrencySymbol();
+
+        actualizarTotales();
+        cambiarTipoMoneda();
+
+        cargarGraficoIngresosPuntoEquilibrio();
+        cargarClientesPorMes();
+        inicializarGraficoVentasPorServicio();
+        cambiarTipoGrafica();
+      });
+      }
+    }
+  
+</script>
+

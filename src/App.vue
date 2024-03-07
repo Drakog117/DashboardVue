@@ -10,6 +10,7 @@ export default {
   name: 'App',
   // Aquí van tus componentes, datos, métodos, etc.
 }
+
 </script>
 
 <style>
