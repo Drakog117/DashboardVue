@@ -72,8 +72,6 @@
       <RectangleComponent id="ingresosPuntoEquilibrio"/>
       <RectangleComponent id="clientesPorMes"/>
       <RectangleComponent id="ventasPorServicio"/>
-      
-
       <RectangleComponent id="map"/>
     </div>
   
@@ -129,8 +127,8 @@
     padding-top: 5%;
     padding-left: 5%;
     display: flex;
-    width: 50%; /* Ajusta el ancho de la imagen al 10% del contenedor */
-    height: 60%; /* Mantiene la proporción de la imagen */
+    width: 25%; /* Ajusta el ancho de la imagen al 10% del contenedor */
+    height: auto; /* Mantiene la proporción de la imagen */
     
   }
   
@@ -189,8 +187,8 @@
 
   // Importación de funciones de dashboard.js
   import { cargarGraficoIngresosPuntoEquilibrio, cargarClientesPorMes, inicializarGraficoVentasPorServicio, cambiarTipoGrafica} from '../Api/kpis.js';
-  import {fetchData, updateChart, updateChartWithData, changeCurrency, convertCurrency, getCurrencySymbol } from '../Api/dashboard.js';
-  import { actualizarTotales, cambiarTipoMoneda } from '../Api/cuadros.js';
+  import { updateChart, updateChartWithData, changeCurrency, convertCurrency, getCurrencySymbol } from '../Api/dashboard.js';
+  import { actualizarTotales, cambiarTipoMoneda, fechaAct } from '../Api/cuadros.js';
 
   export default {
     components: {
@@ -201,9 +199,10 @@
     },
     
     mounted() {
+      
       this.$nextTick(() => {
         
-        fetchData();
+       
         updateChart();
         updateChartWithData();
         changeCurrency();
@@ -212,6 +211,7 @@
 
         actualizarTotales();
         cambiarTipoMoneda();
+        fechaAct();
 
         cargarGraficoIngresosPuntoEquilibrio();
         cargarClientesPorMes();

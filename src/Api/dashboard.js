@@ -48,11 +48,13 @@ export function renderGraficaCrecimiento() {
         .catch(error => console.error('Error en gráfica de crecimiento:', error));
 }
 
-var originalData; // Almacena los datos originales
+
+
+var originalData = []; // Almacena los datos originales
 var currentCurrency = 'peso'; // Moneda predeterminada
 
 // Función para hacer la solicitud AJAX y obtener datos de PHP
-export function fetchData(callback) {
+function fetchData(callback) {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
     if (xhr.readyState == 4 && xhr.status == 200) {
@@ -73,7 +75,7 @@ export function updateChart() {
   // Filtrar datos basados en el rango de fechas
   var filteredData = originalData.filter(function (item) {
     return item.date >= startDate && item.date <= endDate;
-  });
+  })
 
   // Actualizar el gráfico con los datos filtrados y la moneda actual
   updateChartWithData(filteredData, currentCurrency);
@@ -82,13 +84,15 @@ export function updateChart() {
 
 export function updateChartWithData(filteredData, currency) {
     var chart = echarts.init(document.getElementById('chartContainer'));
-    var dates = filteredData.map(function (item) {
-      return item.date;
-    });
 
-    var amounts = filteredData.map(function (item) {
+    // Comprueba si filteredData está definido antes de llamar a map
+    var dates = filteredData ? filteredData.map(function (item) {
+      return item.date;
+    }) : [];
+
+    var amounts = filteredData ? filteredData.map(function (item) {
       return convertCurrency(item.amount, currency);
-    });
+    }) : [];
 
     // Configurar la opción del gráfico
     var option = {
@@ -125,11 +129,12 @@ export function updateChartWithData(filteredData, currency) {
     chart.setOption(option);
 }
 
+
 // Función para cambiar la moneda
 export function changeCurrency() {
     var selectedCurrency = document.getElementById('currencySelector').value;
     currentCurrency = selectedCurrency;
-    
+
     updateChart(); // Actualiza el gráfico con la nueva moneda
 }
 
@@ -141,8 +146,8 @@ export function convertCurrency(amount, currency) {
     // Convertir de pesos a dólares
     if (currency === 'dolar') {
     return amount / pesoToDollarRate;
-    } 
-    
+    }
+
 
     // Convertir de pesos a euros
     if (currency === 'euro') {
@@ -154,7 +159,7 @@ export function convertCurrency(amount, currency) {
 }
 
 export function getCurrencySymbol(currency) {
-  
+
     switch (currency) {
         case 'peso':
           return '$';

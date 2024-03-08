@@ -1,3 +1,5 @@
+/* global xh */
+
 export function actualizarTotales(datos, tipoMoneda) {
   function sumarTotales(datos, tipoRegistro) {
     return datos[tipoRegistro].reduce(function (total, registro) {
@@ -90,6 +92,8 @@ export function cambiarTipoMoneda() {
   xhr.open("GET", "http://localhost/phpDash/cuadros.php", true);
   xhr.send();
 
+  
+export function fechaAct() {
   document.getElementById('filtroFechasForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
@@ -105,5 +109,7 @@ export function cambiarTipoMoneda() {
       }
     };
     xhr.open("GET", "http://localhost/phpDash/cuadros.php?fechaInicio=" + fechaInicio + "&fechaFin=" + fechaFin, true);
-    xhr.send();
-});
+    xh
+  });
+}
+

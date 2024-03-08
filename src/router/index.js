@@ -3,7 +3,7 @@ import DashView from '../views/DashView.vue'
 
 const routes = [
   {
-    path: '/d',
+    path: '/',
     name: 'DashView',
     component: DashView
   }
